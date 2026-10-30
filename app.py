@@ -68,7 +68,6 @@ def on_message(data):
 def on_typing(data):
     emit("typing", data, broadcast=True, include_self=False)
 
-……
 #  使用者更改名稱時觸發
 @socketio.on("change_username")
 def on_change(data):
