@@ -68,18 +68,22 @@ def on_message(data):
 def on_typing(data):
     emit("typing", data, broadcast=True, include_self=False)
 
-# 使用者更改名稱時觸發
+……
+#  使用者更改名稱時觸發
 @socketio.on("change_username")
 def on_change(data):
-old = data.get("oldUsername") # 原本的名稱
-new = data.get("newUsername") # 新名稱
-# 如果這個 SID 還在 clients 裡，更新名稱
-if request.sid in clients:
-clients[request.sid]["username"] = new
-# 廣播名稱變更事件給所有人
-emit("user_changed_name",
-{"oldUsername": old, "newUsername": new},
-broadcast=True)
+    old = data.get("oldUsername")  # 原本的名稱
+    new = data.get("newUsername")  # 新名稱
+
+    # 如果這個 SID 還在 clients 裡，更新名稱
+    if request.sid in clients:
+        clients[request.sid]["username"] = new
+
+    # 廣播名稱變更事件給所有人
+    emit("user_changed_name",
+         {"oldUsername": old, "newUsername": new},
+         broadcast=True)
+
 
 if __name__ == "__main__":
    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
